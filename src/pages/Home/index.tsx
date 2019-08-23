@@ -1,13 +1,23 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { createStackNavigator, createAppContainer } from 'react-navigation'
+import { inject, observer } from 'mobx-react'
+import HomeStore from '../../stores/home'
+import HocTest from './HocTest'
 
-export default class HomeScreen extends React.Component {
+interface IProps {
+    home: HomeStore
+};
+@inject('home')
+@observer
+@HocTest
+class HomeScreen extends React.Component<IProps> {
     render() {
+        const { str } = this.props.home
         return (
             <View style={styles.wrap}>
                 <Text style={styles.font}>
-                    this is test View
+                    this is test View --- {str}
                 </Text>
             </View>
         )
@@ -26,3 +36,6 @@ const styles = StyleSheet.create({
         color: 'red'
     }
 })
+
+// export default inject('home')(HomeScreen)
+export default HomeScreen
